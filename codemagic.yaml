@@ -1,5 +1,5 @@
 workflows:
-  hello-world:
-    name: Hello world workflow
+  CodemagicHomeTaskWorkflow:
+    name: CodemagicHomeTask Pipeline
     scripts:
         - echo "Hello World!"
