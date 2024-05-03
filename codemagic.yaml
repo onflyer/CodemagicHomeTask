@@ -3,6 +3,12 @@ workflows:
     name: iOS Native
     max_build_duration: 120
     instance_type: mac_mini_m1
+    integrations:
+      app_store_connect: codemagic
+    environment:
+      ios_signing:
+        distribution_type: ad_hoc
+        bundle_identifier: com.onflyer.CodemagicHomeTask
       vars:
         BUNDLE_ID: "com.onflyer.CodemagicHomeTask"
         XCODE_WORKSPACE: "CodemagicHomeTask.xcodeproj" # <-- Put the name of your Xcode workspace here
