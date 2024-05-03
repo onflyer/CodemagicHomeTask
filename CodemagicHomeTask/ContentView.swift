@@ -10,10 +10,9 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            Text("Hello Codemagic, this is home task app")
+                .font(.system(size: 30, weight: .heavy, design: .rounded))
+                .foregroundStyle(.linearGradient(colors: [.blue, .orange], startPoint: .leading, endPoint: .trailing))
         }
         .padding()
     }
