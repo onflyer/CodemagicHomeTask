@@ -7,8 +7,8 @@ workflows:
       app_store_connect: codemagic
     environment:
       ios_signing:
-        distribution_type: app_store
-        bundle_identifier: io.codemagic.sample.iosnative
+        distribution_type: ad_hoc
+        bundle_identifier: com.onflyer.CodemagicHomeTask
       vars:
         BUNDLE_ID: "com.onflyer.CodemagicHomeTask"
         XCODE_WORKSPACE: "CodemagicHomeTask.xcodeproj" # <-- Put the name of your Xcode workspace here
