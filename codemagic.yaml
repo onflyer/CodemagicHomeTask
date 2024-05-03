@@ -1,5 +1,8 @@
 workflows:
-  CodemagicHomeTaskWorkflow:
-    name: CodemagicHomeTask Pipeline
-    scripts:
-        - echo "Hello World!"
+  ios-workflow:
+    name: iOS Workflow
+    # ....
+    environment:
+      ios_signing:
+        distribution_type: ad_hoc 
+        bundle_identifier: com.example.id
