@@ -1,52 +1,53 @@
 workflows:
-  ios-native-workflow:
-    name: iOS Native
-    max_build_duration: 120
-    instance_type: mac_mini_m1
-    integrations:
-      app_store_connect: codemagic
+  ios-project-debug: # Workflow ID
+    name: iOS Debug # Workflow name
     environment:
-      ios_signing:
-        distribution_type: ad_hoc
-        bundle_identifier: com.onflyer.CodemagicHomeTask
-      vars:
-        BUNDLE_ID: "com.onflyer.CodemagicHomeTask"
-        XCODE_WORKSPACE: "CodemagicHomeTask.xcodeproj" # <-- Put the name of your Xcode workspace here
-        XCODE_SCHEME: "CodemagicHomeTask" # <-- Put the name of your Xcode scheme here
-        APP_STORE_APPLE_ID: 1555555551
       xcode: latest
       cocoapods: default
+      vars:
+          BUNDLE_ID: "com.onflyer.CodemagicHomeTask" # replace with your app bundle
+          XCODE_PROJECT: "CodemagicHomeTask.xcodeproj" # Replace with your xcodeproj name
+          XCODE_SCHEME: "CodemagicHomeTask" # Replace with your project name
+      ios_signing:
+          distribution_type: ad_hoc # or: ad_hoc | development | enterprise
+          bundle_identifier: com.onflyer.CodemagicHomeTask # replace with your app bundle
     scripts:
-      - name: Install CocoaPods dependencies
+      - name: Run tests
         script: |
-          pod install
-      - name: Set up provisioning profiles settings on Xcode project
-        script: xcode-project use-profiles
+          xcodebuild \
+          -project "$XCODE_PROJECT" \
+          -scheme "$XCODE_SCHEME" \
+          -sdk iphonesimulator \
+          -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.2' \
+          clean build test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+      - name: Build debug app
+        script: |
+          xcodebuild build -project "$XCODE_PROJECT" \
+          -scheme "$XCODE_SCHEME" \
+          CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO - name: Build ipa for distribution
       - name: Increment build number
         script: |
+          #!/bin/sh
           cd $CM_BUILD_DIR
           LATEST_BUILD_NUMBER=$(app-store-connect get-latest-app-store-build-number "$APP_STORE_APPLE_ID")
           agvtool new-version -all $(($LATEST_BUILD_NUMBER + 1))
       - name: Build ipa for distribution
         script: |
           xcode-project build-ipa \
-            --project "$CM_BUILD_DIR/$XCODE_WORKSPACE" \
-            --scheme "$XCODE_SCHEME"
+          --workspace "$CM_BUILD_DIR/$XCODE_WORKSPACE" \
+          --scheme "$XCODE_SCHEME"
     artifacts:
-      - build/ios/ipa/*.ipa
-      - /tmp/xcodebuild_logs/*.log
-      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
-      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+       - build/ios/ipa/*.ipa
+       - /tmp/xcodebuild_logs/*.log
+       - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
+       - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
     publishing:
       email:
         recipients:
-          - salkaorama@gmail.com
-        notify:
+          - salkaorama@gmail.com # Replace with your email
+      notify:
           success: true
-          failure: false
-      app_store_connect:
-        auth: integration
-
+          failure: true
         
 
 
