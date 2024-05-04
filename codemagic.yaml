@@ -8,11 +8,6 @@ workflows:
           XCODE_PROJECT: "CodemagicHomeTask.xcodeproj" # Replace with your xcodeproj name
           XCODE_SCHEME: "CodemagicHomeTask" # Replace with your project name
     scripts:
-      - name: Build debug app
-        script: |
-          xcodebuild build project "$XCODE_PROJECT" \
-          -scheme "$XCODE_SCHEME" \
-          CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO - name: Build ipa for distribution
       - name: Build ipa for distribution
         script: |
           xcode-project build-ipa \
@@ -23,10 +18,7 @@ workflows:
        - /tmp/xcodebuild_logs/*.log
        - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
        - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
-    publishing:
-      email:
-        recipients:
-          - salkaorama@gmail.com # Replace with your email
+    
      
         
 
