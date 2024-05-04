@@ -3,7 +3,6 @@ workflows:
     name: iOS Debug # Workflow name
     environment:
       xcode: latest
-      cocoapods: default
       vars:
           BUNDLE_ID: "com.onflyer.CodemagicHomeTask" # replace with your app bundle
           XCODE_PROJECT: "CodemagicHomeTask.xcodeproj" # Replace with your xcodeproj name
