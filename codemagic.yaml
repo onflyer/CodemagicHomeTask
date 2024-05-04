@@ -9,7 +9,7 @@ workflows:
           XCODE_PROJECT: "CodemagicHomeTask.xcodeproj" # Replace with your xcodeproj name
           XCODE_SCHEME: "CodemagicHomeTask" # Replace with your project name
       ios_signing:
-          distribution_type: ad_hoc # or: ad_hoc | development | enterprise
+          distribution_type: development # or: ad_hoc | development | enterprise
           bundle_identifier: com.onflyer.CodemagicHomeTask # replace with your app bundle
     scripts:
       - name: Run tests
